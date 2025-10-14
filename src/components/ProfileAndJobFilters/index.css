@@ -1,0 +1,90 @@
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  padding: 10px;
+  font-family: 'Roboto';
+}
+.profile-view-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.hr-tag {
+  width: 100%;
+  border-width: 1px;
+}
+.user-name {
+  color: #6366f1;
+  font-size: 22px;
+}
+.user-bio {
+  font-size: 16px;
+  color: #2c364c;
+}
+.job-type-heading-filter {
+  font-size: 26px;
+}
+.salary-range-heading {
+  font-size: 26px;
+}
+.filter-margin {
+  margin-bottom: 8px;
+}
+.label-text {
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 3px;
+}
+
+/* failure */
+
+.failure-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+.profile-retry-btn {
+  border: none;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 12px;
+  background-color: #4f46e5;
+  border-radius: 4px;
+}
+.profile-loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.employment-filter-list-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.package-list-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 576px) {
+  .profile-view-container {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+  .profile-image {
+    width: 100%;
+  }
+  .user-bio {
+    width: 100%;
+  }
+}

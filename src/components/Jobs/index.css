@@ -1,0 +1,50 @@
+.profile-and-jobcard-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px 25px;
+  gap: 10px;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.failure-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.jobs-page-failure-img {
+  width: 250px;
+}
+.job-page-failure-heading {
+  margin-bottom: 0;
+  font-size: 24px;
+}
+.failure-view-text {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.failure-view-retry-btn {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 14px;
+  background-color: #4f46e5;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+.align-center {
+  width: 60%;
+}
+.job-card-loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
