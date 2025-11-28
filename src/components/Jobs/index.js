@@ -7,41 +7,17 @@ import ProfileAndJobFilters from '../ProfileAndJobFilters'
 import JobCard from '../JobCard'
 
 const employmentTypesList = [
-  {
-    label: 'Full Time',
-    employmentTypeId: 'FULLTIME',
-  },
-  {
-    label: 'Part Time',
-    employmentTypeId: 'PARTTIME',
-  },
-  {
-    label: 'Freelance',
-    employmentTypeId: 'FREELANCE',
-  },
-  {
-    label: 'Internship',
-    employmentTypeId: 'INTERNSHIP',
-  },
+  {label: 'Full Time', employmentTypeId: 'FULLTIME'},
+  {label: 'Part Time', employmentTypeId: 'PARTTIME'},
+  {label: 'Freelance', employmentTypeId: 'FREELANCE'},
+  {label: 'Internship', employmentTypeId: 'INTERNSHIP'},
 ]
 
 const salaryRangesList = [
-  {
-    salaryRangeId: '1000000',
-    label: '10 LPA and above',
-  },
-  {
-    salaryRangeId: '2000000',
-    label: '20 LPA and above',
-  },
-  {
-    salaryRangeId: '3000000',
-    label: '30 LPA and above',
-  },
-  {
-    salaryRangeId: '4000000',
-    label: '40 LPA and above',
-  },
+  {salaryRangeId: '1000000', label: '10 LPA and above'},
+  {salaryRangeId: '2000000', label: '20 LPA and above'},
+  {salaryRangeId: '3000000', label: '30 LPA and above'},
+  {salaryRangeId: '4000000', label: '40 LPA and above'},
 ]
 
 const apiStatusConstant = {
@@ -65,89 +41,75 @@ class Jobs extends Component {
   }
 
   activeEmploymentId = selectedEmployment => {
-    this.setState(prevState => {
-      const isAlreadySelected =
-        prevState.preferedEmploymentType.includes(selectedEmployment)
-      const updatedList = isAlreadySelected
-        ? prevState.preferedEmploymentType.filter(
-            type => type !== selectedEmployment,
-          )
-        : [...prevState.preferedEmploymentType, selectedEmployment]
+    this.setState(
+      prevState => {
+        const isAlreadySelected = prevState.preferedEmploymentType.includes(
+          selectedEmployment,
+        )
 
-      return {preferedEmploymentType: updatedList}
-    }, this.getJobs)
+        const updatedList = isAlreadySelected
+          ? prevState.preferedEmploymentType.filter(
+              type => type !== selectedEmployment,
+            )
+          : [...prevState.preferedEmploymentType, selectedEmployment]
+
+        return {preferedEmploymentType: updatedList}
+      },
+      this.getJobs,
+    )
   }
 
   activeSalaryRange = selected => {
-    this.setState(
-      {
-        preferedSalaryRange: selected,
-      },
-      this.getJobs,
-    )
+    this.setState({preferedSalaryRange: selected}, this.getJobs)
   }
 
-  searchInputValue = searchValue => {
-    this.setState(
-      {
-        searchInput: searchValue,
-      },
-      this.getJobs,
-    )
+  searchInputValue = value => {
+    this.setState({searchInput: value}, this.getJobs)
   }
-
-  /* 
-    const {
-      preferedEmploymentType,
-      preferedSalaryRange,
-      searchInput,
-    } = this.state
-  */
 
   getJobs = async () => {
     const {preferedEmploymentType, preferedSalaryRange, searchInput} =
       this.state
+
     const employmentString = preferedEmploymentType.join(',')
-    this.setState({
-      apiStatus: apiStatusConstant.inProgress,
-    })
+
+    this.setState({apiStatus: apiStatusConstant.inProgress})
+
     try {
       const jwtToken = Cookie.get('jwt_token')
       const jobsApiUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentString}&minimum_package=${preferedSalaryRange}&search=${searchInput}`
+
       const options = {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
       }
+
       const response = await fetch(jobsApiUrl, options)
-      const jobData = await response.json()
-      const jobArray = jobData.jobs
-      const formattedData = jobArray.map(item => ({
-        companyLogoUrl: item.company_logo_url,
-        employmentType: item.employment_type,
-        id: item.id,
-        jobDescription: item.job_description,
-        location: item.location,
-        packagePerAnnum: item.package_per_annum,
-        rating: item.rating,
-        title: item.title,
-      }))
+      const data = await response.json()
+
       if (response.ok) {
+        const formattedData = data.jobs.map(item => ({
+          companyLogoUrl: item.company_logo_url,
+          employmentType: item.employment_type,
+          id: item.id,
+          jobDescription: item.job_description,
+          location: item.location,
+          packagePerAnnum: item.package_per_annum,
+          rating: item.rating,
+          title: item.title,
+        }))
+
         this.setState({
           jobsList: formattedData,
           apiStatus: apiStatusConstant.success,
         })
       } else {
-        this.setState({
-          apiStatus: apiStatusConstant.failure,
-        })
+        this.setState({apiStatus: apiStatusConstant.failure})
       }
-    } catch (error) {
-      console.log(`Netwok Error ${error}`)
-      this.setState({
-        apiStatus: apiStatusConstant.failure,
-      })
+    } catch {
+      this.setState({apiStatus: apiStatusConstant.failure})
     }
   }
 
@@ -180,7 +142,9 @@ class Jobs extends Component {
 
   render() {
     const {jobsList, apiStatus, preferedSalaryRange} = this.state
-    let jobCardView
+
+    let jobCardView = null
+
     switch (apiStatus) {
       case apiStatusConstant.inProgress:
         jobCardView = this.renderLoaderView()
@@ -199,6 +163,7 @@ class Jobs extends Component {
       default:
         jobCardView = null
     }
+
     return (
       <>
         <Header />
@@ -216,4 +181,5 @@ class Jobs extends Component {
     )
   }
 }
+
 export default Jobs
