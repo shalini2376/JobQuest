@@ -112,7 +112,7 @@ src/
 
 ## 📸 Screenshots
 
-![Login Page](./public/screenshots/job_login.png)
+![Login Page](.public/screenshots/job_login.png)
 ![Jobs List](./public/screenshots/job_home.png)
 ![Jobs List](./public/screenshots/jobs.png)
 ![Jobs List](./public/screenshots/job_details.png)
